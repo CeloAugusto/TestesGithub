@@ -6,8 +6,10 @@ on:
   workflow_dispatch:
 jobs:
   deploy:
+    environment:
+      name: server
+      url: ${{ github.ref == 'refs/heads/master' && 'production' || 'homolog') }}
     runs-on: ubuntu-latest
-    environment: ${{ secrets.GITHUB_REF != 'refs/heads/master' && 'homolog' || 'production') }}
     steps:
       - uses: actions/checkout@v2
         
