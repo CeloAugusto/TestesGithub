@@ -7,8 +7,7 @@ on:
 jobs:
   deploy:
     environment:
-      name: server
-      url: ${{ github.ref == 'refs/heads/master' && 'production' || 'homolog' }}
+      name: ${{ github.ref == 'refs/heads/master' && 'production' || 'homolog' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
