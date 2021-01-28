@@ -7,7 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ format(github.ref != 'refs/heads/master' && 'homolog' || 'production') }}
+    environment: ${{ secrets.GITHUB_REF != 'refs/heads/master' && 'homolog' || 'production') }}
     steps:
       - uses: actions/checkout@v2
         
