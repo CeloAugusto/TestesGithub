@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 jobs:
   deploy:
-    environment: ${{ github.ref != 'refs/heads/master' && 'homolog' || 'production' }}
     runs-on: ubuntu-latest
+    environment: ${{ format(github.ref != 'refs/heads/master' && 'homolog' || 'production') }}
     steps:
       - uses: actions/checkout@v2
         
@@ -16,4 +16,4 @@ jobs:
 
       - name: Run a dynamic echo
         run: |
-          echo ${{ secrets.message }},
+          echo ${{ secrets.message }}
