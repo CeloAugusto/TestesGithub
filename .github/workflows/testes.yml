@@ -1,0 +1,43 @@
+name: Teste
+
+on:
+  push:
+    branches: [ master, homolog ]
+  workflow_dispatch:
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Run a generic echo
+        run: echo Hello, world!
+
+      - name: Save the commit/version
+        run: |
+          echo ${{ github.event.head_commit.message }}
+          echo ${{ github.sha }}
+      
+      - name: Generate build
+        run: |
+          date >> ./build.txt 
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          name: build
+          path: ./build.txt
+          if-no-files-found: error
+
+      
+      - name: Deploy Production
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo Production...
+          cat ./build.txt
+
+      - name: Deploy Homolog
+        if: github.ref == 'refs/heads/homolog'
+        run: |
+          echo Homolog...
+          cat ./build.txt
