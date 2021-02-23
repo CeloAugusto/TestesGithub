@@ -5,7 +5,7 @@ on:
     branches: [ master, homolog ]
   workflow_dispatch:
 jobs:
-  deploy-production:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
           name: build
           path: ./build.txt
           if-no-files-found: error
-
+          retention-days: 15
       
       - name: Deploy Production
         if: github.ref == 'refs/heads/master'
@@ -41,3 +41,21 @@ jobs:
         run: |
           echo Homolog...
           cat ./build.txt
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: true
+          prerelease: false
