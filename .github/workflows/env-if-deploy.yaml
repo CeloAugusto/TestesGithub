@@ -10,13 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-    
-      - name: Deploy
-        env:
-          MESSAGE: ${{
-              github.ref == 'refs/heads/master' && 'Production...' ||
-              github.ref == 'refs/heads/homolog' && 'Homolog...' ||
-              github.ref == 'refs/heads/develop' && 'Develop...'
-            }}
+      
+      - name: Set env PRD
+        if: github.ref == 'refs/heads/master'
         run: |
-          echo $MESSAGE
+          echo "HOST=${{ secrets.HOST_PRD }}" >> $GITHUB_ENV
+          echo "MESSAGE=Production..." >> $GITHUB_ENV
+      
+      - name: Set env HML
+        if: github.ref == 'refs/heads/hmolog'
+        run: |
+          echo "HOST=${{ secrets.HOST_HOM }}" >> $GITHUB_ENV
+          echo "MESSAGE=Homolog..." >> $GITHUB_ENV
+        
+      - name: Deploy SCP
+        run: |
+          echo "${{ env.HOST }}"
+          echo "${{ env.MESSAGE }}"
+    
+      - name: Deploy SSH
+        run: |
+          echo "${{ env.HOST }}"
+          echo "${{ env.MESSAGE }}"
