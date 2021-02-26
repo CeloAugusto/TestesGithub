@@ -2,7 +2,11 @@ name: Enf if Teste
 
 on:
   push:
-    branches: [ master, homolog ]
+    branches: |
+      [ 
+        # master, 
+        # homolog
+      ]
   workflow_dispatch:
 
 jobs:
