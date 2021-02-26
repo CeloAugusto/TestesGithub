@@ -22,7 +22,7 @@ jobs:
           EOF
 
       - name: Set env HML
-        if: github.ref == 'refs/heads/hmolog'
+        if: github.ref == 'refs/heads/homolog'
         run: |
           cat << EOF >> $GITHUB_ENV
             HOST=${{ secrets.HOST_HOM }}
