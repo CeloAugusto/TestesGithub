@@ -24,12 +24,10 @@ jobs:
       - name: Set env HML
         if: github.ref == 'refs/heads/homolog'
         run: |
-          echo 'HOST=${{ secrets.HOST_HOM }}' >> $GITHUB_ENV
-          echo 'MESSAGE=Homolog...' >> $GITHUB_ENV
-      
-      - name: Check
-        run: |
-          cat $GITHUB_ENV
+          cat << EOF >> $GITHUB_ENV
+            HOST=${{ secrets.HOST_HOM }}
+            MESSAGE=Homolog...
+          EOF
 
       - name: Deploy SCP
         run: |
