@@ -24,10 +24,8 @@ jobs:
       - name: Set env HML
         if: github.ref == 'refs/heads/homolog'
         run: |
-          echo "
-            HOST=${{ secrets.HOST_HOM }}
-            MESSAGE=Homolog...
-          "  >> $GITHUB_ENV
+          echo 'HOST=${{ secrets.HOST_HOM }}' >> $GITHUB_ENV
+          echo 'MESSAGE=Homolog...' >> $GITHUB_ENV
       
       - name: Check
         run: |
