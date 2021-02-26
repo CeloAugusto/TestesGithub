@@ -20,4 +20,3 @@ jobs:
             }}
         run: |
           echo $MESSAGE
-          cat ./build.txt
