@@ -1,10 +1,10 @@
-name: Enf if Teste
+name: Env if Teste
 
 on:
   push:
     branches:
-      - master, 
-#       - homolog
+      - master
+      - homolog
   workflow_dispatch:
 
 jobs:
@@ -12,24 +12,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Set env PRD
         if: github.ref == 'refs/heads/master'
         run: |
-          echo "HOST=${{ secrets.HOST_PRD }}" >> $GITHUB_ENV
-          echo "MESSAGE=Production..." >> $GITHUB_ENV
-      
+          cat << EOF >> $GITHUB_ENV
+            HOST=${{ secrets.HOST_PRD }}
+            MESSAGE=Production...
+          EOF
+
       - name: Set env HML
-        if: github.ref == 'refs/heads/hmolog'
+        if: github.ref == 'refs/heads/homolog'
         run: |
-          echo "HOST=${{ secrets.HOST_HOM }}" >> $GITHUB_ENV
-          echo "MESSAGE=Homolog..." >> $GITHUB_ENV
-        
+          cat << EOF >> $GITHUB_ENV
+            HOST=${{ secrets.HOST_HOM }}
+            MESSAGE=Homolog...
+          EOF
+
       - name: Deploy SCP
         run: |
           echo "${{ env.HOST }}"
           echo "${{ env.MESSAGE }}"
-    
+
       - name: Deploy SSH
         run: |
           echo "${{ env.HOST }}"
