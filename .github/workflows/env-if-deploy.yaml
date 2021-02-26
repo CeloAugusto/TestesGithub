@@ -28,6 +28,10 @@ jobs:
             HOST=${{ secrets.HOST_HOM }}
             MESSAGE=Homolog...
           EOF
+      
+      - name: Check
+        run: |
+          cat $GITHUB_ENV
 
       - name: Deploy SCP
         run: |
