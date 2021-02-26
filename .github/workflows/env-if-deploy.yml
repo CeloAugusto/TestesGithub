@@ -1,0 +1,32 @@
+name: Enf if Teste
+
+on:
+  push:
+    branches: [ master, homolog ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Env Production
+        if: github.ref == 'refs/heads/master'
+        env:
+          MESSAGE: Production...
+       
+      - name: Env Homolog
+        if: github.ref == 'refs/heads/homolog'
+        env:
+          MESSAGE: Homolog...
+
+      - name: Env Dev
+        if: github.ref == 'refs/heads/dev'
+        env:
+          MESSAGE: Dev...
+
+      - name: Deploy
+        run: |
+          echo $MESSAGE
+          cat ./build.txt
