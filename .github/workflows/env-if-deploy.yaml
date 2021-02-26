@@ -16,27 +16,29 @@ jobs:
       - name: Set env PRD
         if: github.ref == 'refs/heads/master'
         run: |
-          cat << EOF >> $GITHUB_ENV
-            HOST=${{ secrets.HOST_PRD }}
-            MESSAGE=Production...
-          EOF
+          echo "HOST=${{ secrets.HOST_PRD }}" >> $GITHUB_ENV
+          echo "MESSAGE=Production..." >> $GITHUB_ENV
+          cat ${{ secrets.ENVFILE_PRD }} >> .env
+          # cat << EOF >> $GITHUB_ENV
+          #   HOST=${{ secrets.HOST_PRD }}
+          #   MESSAGE=Production...
+          # EOF
 
       - name: Set env HML
         if: github.ref == 'refs/heads/homolog'
         run: |
           echo "HOST=${{ secrets.HOST_HOM }}" >> $GITHUB_ENV
           echo "MESSAGE=Homolog..." >> $GITHUB_ENV
-          # cat << EOF >> $GITHUB_ENV
-          #   HOST=${{ secrets.HOST_HOM }}
-          #   MESSAGE=Homolog...
-          # EOF
+          cat ${{ secrets.ENVFILE_HOM }} >> .env
 
       - name: Deploy SCP
         run: |
           echo "${{ env.HOST }}"
           echo "${{ env.MESSAGE }}"
+          cat .env
 
       - name: Deploy SSH
         run: |
           echo "${{ env.HOST }}"
           echo "${{ env.MESSAGE }}"
+          cat .env
