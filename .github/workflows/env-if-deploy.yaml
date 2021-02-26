@@ -18,7 +18,7 @@ jobs:
         run: |
           echo "HOST=${{ secrets.HOST_PRD }}" >> $GITHUB_ENV
           echo "MESSAGE=Production..." >> $GITHUB_ENV
-          cat ${{ secrets.ENVFILE_PRD }} >> .env
+          echo "${{ secrets.ENVFILE_PRD }}" >> .env
           # cat << EOF >> $GITHUB_ENV
           #   HOST=${{ secrets.HOST_PRD }}
           #   MESSAGE=Production...
