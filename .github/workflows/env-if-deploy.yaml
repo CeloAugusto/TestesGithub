@@ -1,0 +1,23 @@
+name: Enf if Teste
+
+on:
+  push:
+    branches: [ master, homolog ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Deploy
+        env:
+          MESSAGE: ${{
+              github.ref == 'refs/heads/master' && 'Production...' ||
+              github.ref == 'refs/heads/homolog' && 'Homolog...' ||
+              github.ref == 'refs/heads/develop' && 'Develop...'
+            }}
+        run: |
+          echo $MESSAGE
+          cat ./build.txt
