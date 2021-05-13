@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI/CD ${{ github.ref == 'refs/heads/master' && 'production' || 'homolog' }}
 
 on:
   push:
